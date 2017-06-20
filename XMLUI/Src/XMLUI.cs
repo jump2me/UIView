@@ -58,7 +58,7 @@ public static class XMLUI
 	public static TYPE CreateView<TYPE>() where TYPE : UIView
 	{
 		TYPE view = Activator.CreateInstance<TYPE>();
-		view.SetLayoutXml();
+        XMLayoutBuilder.Build(view);
 
 		return view;
 	}
@@ -75,46 +75,11 @@ public static class XMLUI
 		}
 
 		UIView view = (UIView)Activator.CreateInstance(type);
-		view.SetLayoutXml();
+        XMLayoutBuilder.Build(view);
 
 		return view;
 	}
 
-	public static void ReadLayoutXmlDocument(XmlDocument _layoutXml, UIView _rootUIView)
-	{
-		XmlElement layoutXmlRoot = _layoutXml.DocumentElement;
-		List<XmlNode> layoutXmlNodes = layoutXmlRoot.GetAllChildrenXMLNodesRecursively();
-
-		Dictionary<XmlNode, UIView> viewByNodes = new Dictionary<XmlNode, UIView>();
-
-		viewByNodes.Add(layoutXmlRoot, _rootUIView);
-
-		_rootUIView.ClassRoot = _rootUIView;
-		_rootUIView.ApplyLayoutXmlNode(layoutXmlRoot, _rootUIView);
-
-		foreach (XmlNode childLayoutXmlNode in layoutXmlNodes)
-		{
-			XmlNode parentNode = childLayoutXmlNode.ParentNode;
-            UIView childUIView = XMLUI.CreateView(childLayoutXmlNode.Name);
-			if (childUIView == null)
-				return;
-
-			childUIView.ClassRoot = _rootUIView;
-
-			if (parentNode == layoutXmlRoot)
-			{
-				childUIView.Parent = _rootUIView.RectTransform;
-			}
-			else
-			{
-				childUIView.Parent = viewByNodes[parentNode].RectTransform;
-			}
-
-			viewByNodes.Add(childLayoutXmlNode, childUIView);
-
-			_rootUIView.ApplyLayoutXmlNode(childLayoutXmlNode, childUIView);
-		}
-	}
 
 	private static string m_style = "Default";
 	public static string Style
