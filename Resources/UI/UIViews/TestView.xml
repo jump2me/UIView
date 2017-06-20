@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TestView isRoot="true">
+  <Panel Name="TestPanel" Anchor="Stretch" Margin="200,200,50,50">
+    <Button Name="First" Anchor="TopCenter" OffsetY="100"/>
+    
+    <Button Style="Red" Name="Second" Anchor="TopCenter" OffsetY="180" OnClick="OnRedButtonClicked">
+      <Text Style="Default" Name="Text" Width="200" Height="60" OffsetY="2" />
+    </Button>
+    
+    <Button Style="Blue" Name="Third" Anchor="TopCenter" OffsetY="260">
+      <Text Style="Default" Name="Text" Width="200" Height="60" Text="{TestString}" OffsetY="2" />
+    </Button>
+    
+    <Button Style="Close" Name="CloseButton" Anchor="TopRight" OffsetX="50" OffsetY="50" />
+
+    <Text Style="Default" Name="Text" Width="400" Height="60" OffsetY="-100" Text="{TestString}" />
+  </Panel>    
+</TestView>

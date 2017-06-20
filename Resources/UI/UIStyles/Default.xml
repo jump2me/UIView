@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Style>
+  
+  <!--Fonts-->
+  <Font Name="NanumBarunGothicBold" Asset="UI/Fonts/NanumBarunGothicBold" />
+  
+  <!--Panels-->
+  <Panel Style="Default" Image="UI/Images/frm_tabOut" Type="Sliced" Width="800" Height="600" />
+  
+  <!--Buttons-->
+  <Button Style="Default" Image="UI/Images/btn_blue" Type="Sliced" Width="240" Height="62" />
+  <Button Style="Blue" Image="UI/Images/btn_blue" Type="Sliced" Width="240" Height="62" />
+  <Button Style="Red" Image="UI/Images/btn_red" Down="UI/Images/btn_gray" Type="Sliced" Width="240" Height="62" />
+  <Button Style="Close" Image="UI/Images/btn_close" Type="Simple" Width="45" Height="45" />
+
+  <!--Text-->
+  <Text Style="Default" 
+        Font="NanumBarunGothicBold" 
+        Size="24" 
+        Spacing="0.7" 
+        Color="0xfff5da" 
+        Alignment="MiddleCenter" 
+        AutoWrap="true" 
+        BestFit="true" 
+        MinSize="10" 
+        MaxSize="24"
+        Text="text" />
+  
+</Style>
