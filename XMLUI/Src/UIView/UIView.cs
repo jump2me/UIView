@@ -9,7 +9,7 @@ using System.Linq;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
 
-public partial class UIView : Input
+public partial class UIView
 {
     public int ID { get; private set; }
     public string Name { get; internal set; }
@@ -58,8 +58,6 @@ public partial class UIView : Input
         };
 
         RectTransform = GameObject.AddComponent<RectTransform>();
-
-        InitializeInput();
     }
 
     public void SetLayoutXml()
@@ -86,8 +84,12 @@ public partial class UIView : Input
             _view.GameObject.name = name;
 
         // Canvas
-        bool isRoot = _xmlNode.GetBoolValue("isRoot");
+        bool isRoot = _xmlNode.GetBoolValue("Root");
         _view.InitializeCanvasRender(isRoot);
+
+        bool ignoreInput = _xmlNode.GetBoolValue("IgnoreInput");
+        if (ignoreInput == false)
+            InitializeInput();
 
         // Find Style Data
         string styleId = "Default";
