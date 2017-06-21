@@ -12,8 +12,8 @@ public class Text : UIView
     private string DefaultText { get; set; }
     private Property<string> BoundProperty { get; set; }
 
-    public Color Up { get; set; }
-    public Color Down { get; set; }
+    public Color UpColor { get; set; }
+    public Color DownColor { get; set; }
 
     public Text()
     {
@@ -35,8 +35,8 @@ public class Text : UIView
 		int maxSize = _xmlNode.GetIntValue("MaxSize", _style);
         string text = _xmlNode.GetStringValue("Text", _style);
 
-        Up = ColorUtility.HexToColor(upColorHex);
-        Down = ColorUtility.HexToColor(downColorHex);
+        UpColor = ColorUtility.HexToColor(upColorHex);
+        DownColor = ColorUtility.HexToColor(downColorHex);
 
         Property<string> property = null;
         string propertyName = string.Empty;
@@ -62,7 +62,7 @@ public class Text : UIView
 									bestFit,
 									minSize,
 									maxSize,
-                                    Up,
+                                    UpColor,
 									text,
 		                            property);
 

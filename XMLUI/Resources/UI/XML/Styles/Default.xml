@@ -3,7 +3,10 @@
   
   <!--Fonts-->
   <Font Name="NanumBarunGothicBold" Asset="UI/Fonts/NanumBarunGothicBold" />
-  
+
+  <!--Image-->
+  <Image Style="Default" Name="Image" Image="" Type="Simple" Width="100" Height="100" />
+	
   <!--Panels-->
   <Panel Style="Default" Image="UI/Images/frm_tabOut" Type="Sliced" Width="800" Height="600" />
   
@@ -44,5 +47,10 @@
         Text="Button"
         Anchor="Stretch" 
         Margin="30,30,0,2" />
-  
+
+	<Toggle Style="Default" Name="Toggle" Width="240" Height="62" />
+
+	<Image Style="ToggleBG" Name="ToggleBG" Image="UI/Images/ico_checkBox" Type="Sliced" Width="53" Height="53" Anchor="MiddleLeft" />
+	<Image Style="ToggleOn" Name="ToggleOn" Image="UI/Images/img_toggle_on" Type="Simple" Width="31" Height="31" />
+	
 </Style>

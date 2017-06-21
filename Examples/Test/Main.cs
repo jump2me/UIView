@@ -17,6 +17,7 @@ public class Main : MonoBehaviour {
 
     void OnTestButtonClicked()
     {
-        TestView.TestString.Value = System.DateTime.Now.ToLongTimeString();
+        //TestView.TestString.Value = System.DateTime.Now.ToLongTimeString();
+        XMLUI.Dump();
     }
 }

@@ -8,9 +8,8 @@ public class Button : UIView
 {
     private MethodInfo MethodInfo { get; set; }
 
-    private Sprite Up { get; set; }
-    private Sprite Down { get; set; }
-    private Sprite Disable { get; set; }
+    private Sprite UpSprite { get; set; }
+    private Sprite DownSprite { get; set; }
 
     public HashSet<Text> Labels { get; private set; }
 
@@ -25,17 +24,16 @@ public class Button : UIView
         if (string.IsNullOrEmpty(methodName) == false)
             MethodInfo = ReflectionUtility.FindMethod(this, methodName);
 
-        Up = Image.sprite;
-        Disable = Image.sprite;
+        UpSprite = Image.sprite;
 
         var downImgName = _xmlNode.GetStringValue("Down", _styleXml);
         if (string.IsNullOrEmpty(downImgName) == false)
         {
-            Down = Resources.Load<Sprite>(downImgName);
+            DownSprite = Resources.Load<Sprite>(downImgName);
         }
         else
         {
-            Down = Image.sprite;
+            DownSprite = Image.sprite;
         }
     }
 
@@ -53,11 +51,11 @@ public class Button : UIView
     {
         base.OnPointerUp(e);
 
-        Image.sprite = Up;
+        Image.sprite = UpSprite;
 
         foreach(Text t in Labels)
         {
-            t.Text.color = t.Up;
+            t.Text.color = t.UpColor;
         }
     }
 
@@ -65,11 +63,11 @@ public class Button : UIView
     {
         base.OnPointerDown(e);
 
-        Image.sprite = Down;
+        Image.sprite = DownSprite;
 
         foreach (Text t in Labels)
         {
-            t.Text.color = t.Down;
+            t.Text.color = t.DownColor;
         }
     }
 }

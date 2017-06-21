@@ -58,6 +58,8 @@ public partial class UIView
         };
 
         RectTransform = GameObject.AddComponent<RectTransform>();
+
+        XMLUI.UIViews.Add(this);
     }
 
     public void InitializeCanvasRender(bool _root)
@@ -207,6 +209,6 @@ public partial class UIView
 
     public override string ToString()
     {
-        return string.Format("[UIView:{0} Parent:{1}]", Name, Parent.Name);
+        return string.Format("[UIView:{0} Parent:{1} ClassRoot:{2}]", Name, Parent == null? "Null" : Parent.Name, ClassRoot.Name);
     }
 }
