@@ -52,7 +52,7 @@ public static class XMLUI
 	{
 		Assembly = System.Reflection.Assembly.GetExecutingAssembly();
 
-		InitializeStyle();
+        InitializeStyle();
 	}
 
 	public static TYPE CreateView<TYPE>() where TYPE : UIView
@@ -75,11 +75,10 @@ public static class XMLUI
 		}
 
 		UIView view = (UIView)Activator.CreateInstance(type);
-        XMLayoutBuilder.Build(view);
+        XMLayoutBuilder.Build(view, false);
 
 		return view;
 	}
-
 
 	private static string m_style = "Default";
 	public static string Style

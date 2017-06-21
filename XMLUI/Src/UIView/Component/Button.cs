@@ -1,10 +1,8 @@
 ﻿using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using System.Collections;
-using System;
 using System.Xml;
 using System.Reflection;
+using System.Collections.Generic;
 
 public class Button : UIView
 {
@@ -14,9 +12,11 @@ public class Button : UIView
     private Sprite Down { get; set; }
     private Sprite Disable { get; set; }
 
+    public HashSet<Text> Labels { get; private set; }
+
     public Button()
     {
-        
+        Labels = new HashSet<Text>();
     }
 
     internal void InitializeButton(XmlNode _xmlNode, XmlNode _styleXml)
@@ -54,6 +54,11 @@ public class Button : UIView
         base.OnPointerUp(e);
 
         Image.sprite = Up;
+
+        foreach(Text t in Labels)
+        {
+            t.Text.color = t.Up;
+        }
     }
 
     public override void OnPointerDown(BaseEventData e)
@@ -61,5 +66,10 @@ public class Button : UIView
         base.OnPointerDown(e);
 
         Image.sprite = Down;
+
+        foreach (Text t in Labels)
+        {
+            t.Text.color = t.Down;
+        }
     }
 }

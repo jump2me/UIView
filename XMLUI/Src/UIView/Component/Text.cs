@@ -11,6 +11,10 @@ public class Text : UIView
 {
     private string DefaultText { get; set; }
     private Property<string> BoundProperty { get; set; }
+
+    public Color Up { get; set; }
+    public Color Down { get; set; }
+
     public Text()
     {
         
@@ -21,7 +25,8 @@ public class Text : UIView
         string fontName = _xmlNode.GetStringValue("Font", _style);
 		Font font = XMLUI.FindFont(fontName);
 		int fontSize = _xmlNode.GetIntValue("Size", _style);
-        string hex = _xmlNode.GetStringValue("Color", _style);
+        string upColorHex = _xmlNode.GetStringValue("Color", _style);
+        string downColorHex = _xmlNode.GetStringValue("Down", _style);
         float spacing = _xmlNode.GetFloatValue("Spacing", _style);
         TextAnchor alignment = (TextAnchor)Enum.Parse(typeof(TextAnchor), _xmlNode.GetStringValue("Alignment", _style));
 		bool autoWrap = _xmlNode.GetBoolValue("AutoWrap", _style);
@@ -29,6 +34,9 @@ public class Text : UIView
 		int minSize = _xmlNode.GetIntValue("MinSize", _style);
 		int maxSize = _xmlNode.GetIntValue("MaxSize", _style);
         string text = _xmlNode.GetStringValue("Text", _style);
+
+        Up = ColorUtility.HexToColor(upColorHex);
+        Down = ColorUtility.HexToColor(downColorHex);
 
         Property<string> property = null;
         string propertyName = string.Empty;
@@ -54,9 +62,15 @@ public class Text : UIView
 									bestFit,
 									minSize,
 									maxSize,
-                                     ColorUtility.HexToColor(hex),
+                                    Up,
 									text,
 		                            property);
+
+        bool isLabel = _xmlNode.GetBoolValue("Label");
+        if(isLabel)
+        {
+            (Parent as Button).Labels.Add(this);
+        }
     }
 
     internal void InitializeTextComponent(Font _font, FontStyle _fontStyle, int _fontSize, float _lineSpacing, bool _richText, TextAnchor _alignment,
@@ -79,8 +93,9 @@ public class Text : UIView
 		Text.resizeTextMinSize = _minSize;
 		Text.resizeTextMaxSize = _maxSize;
 		Text.color = _color;
-		
-		Text.raycastTarget = false;
+
+        Text.raycastTarget = false;
+        //Text.raycastTarget = true;
 
         BoundProperty = _boundProperty;
         if(BoundProperty != null)

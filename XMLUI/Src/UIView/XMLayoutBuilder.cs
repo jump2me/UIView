@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 public static class XMLayoutBuilder 
 {
-    public static void Build(UIView _view)
+    public static void Build(UIView _view, bool _root = true)
 	{
 		string path = string.Format("UI/XML/Views/{0}", _view.Name);
 
@@ -19,50 +19,51 @@ public static class XMLayoutBuilder
 		}
 		else if (XMLUtility.TryLoadXml(textAsset, out layoutXmlDocument))
 		{
-            ReadLayoutXmlDocument(layoutXmlDocument, _view);
+            ReadLayoutXmlDocument(layoutXmlDocument, _view, _root);
 		}
 	}
 
-	public static void ReadLayoutXmlDocument(XmlDocument _layoutXml, UIView _rootUIView)
+	public static void ReadLayoutXmlDocument(XmlDocument _layoutXml, UIView _rootUIView, bool _root)
 	{
 		XmlElement layoutXmlRoot = _layoutXml.DocumentElement;
-		List<XmlNode> layoutXmlNodes = layoutXmlRoot.GetAllChildrenXMLNodesRecursively();
+        List<XmlNode> layoutXmlNodes = layoutXmlRoot.GetAllChildrenXMLNodesRecursively();
 
-		Dictionary<XmlNode, UIView> viewByNodes = new Dictionary<XmlNode, UIView>();
-
+        Dictionary <XmlNode, UIView> viewByNodes = new Dictionary<XmlNode, UIView>();
 		viewByNodes.Add(layoutXmlRoot, _rootUIView);
 
 		_rootUIView.ClassRoot = _rootUIView;
-		ApplyLayoutXmlNode(layoutXmlRoot, _rootUIView);
+
+        if (_root)
+	        ApplyLayoutXmlNode(layoutXmlRoot, _rootUIView);
 
 		foreach (XmlNode childLayoutXmlNode in layoutXmlNodes)
 		{
+            if (childLayoutXmlNode.NodeType == XmlNodeType.Comment)
+                continue;
+                 
 			XmlNode parentNode = childLayoutXmlNode.ParentNode;
 			UIView childUIView = XMLUI.CreateView(childLayoutXmlNode.Name);
-			if (childUIView == null)
-				return;
-
-			childUIView.ClassRoot = _rootUIView;
+			childUIView.ClassRoot = _rootUIView;       
 
 			if (parentNode == layoutXmlRoot)
 			{
-				childUIView.Parent = _rootUIView.RectTransform;
+				childUIView.Parent = _rootUIView;
 			}
 			else
 			{
-				childUIView.Parent = viewByNodes[parentNode].RectTransform;
-			}
+				childUIView.Parent = viewByNodes[parentNode];
+            }
 
-			viewByNodes.Add(childLayoutXmlNode, childUIView);
+            viewByNodes.Add(childLayoutXmlNode, childUIView);
 
-			ApplyLayoutXmlNode(childLayoutXmlNode, childUIView);
-		}
+            ApplyLayoutXmlNode(childLayoutXmlNode, childUIView);
+        }
 	}
 
 	public static void ApplyLayoutXmlNode(XmlNode _xmlNode, UIView _view)
 	{
-		// GameObject Name
-		string name = _xmlNode.GetStringValue("Name");
+        // GameObject Name
+        string name = _xmlNode.GetStringValue("Name");
 		if (string.IsNullOrEmpty(name) == false)
 			_view.GameObject.name = name;
 

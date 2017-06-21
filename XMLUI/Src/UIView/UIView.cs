@@ -25,8 +25,8 @@ public partial class UIView
 
 	public RectTransform RectTransform { get; internal set; }
 
-	private RectTransform m_parent;
-	public RectTransform Parent
+	private UIView m_parent;
+	public UIView Parent
 	{
 		get
 		{
@@ -36,7 +36,7 @@ public partial class UIView
 		{
 			m_parent = value;
 
-			RectTransform.SetParent(m_parent, false);
+			RectTransform.SetParent(m_parent.RectTransform, false);
 			RectTransform.localPosition = Vector3.zero;
 			RectTransform.localScale = Vector3.one;
 			RectTransform.localRotation = Quaternion.identity;
@@ -138,7 +138,7 @@ public partial class UIView
 		}
 	}
 
-	void UpdateInteractable()
+	protected virtual void UpdateInteractable()
 	{
 
 	}
@@ -192,7 +192,7 @@ public partial class UIView
 
 	public virtual void OnPointerClicked(BaseEventData e)
 	{
-
+        
 	}
 
 	public virtual void OnPointerUp(BaseEventData e)
@@ -204,4 +204,9 @@ public partial class UIView
 	{
 
 	}
+
+    public override string ToString()
+    {
+        return string.Format("[UIView:{0} Parent:{1}]", Name, Parent.Name);
+    }
 }
