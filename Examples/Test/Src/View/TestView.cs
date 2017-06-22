@@ -7,11 +7,11 @@ public class TestView : UIView
 	public TestView()
 	{
         TestString = new Property<string>();
-        TestString.Value = "This is a test Property.";
+        TestString.Value = "Click Me!";
 	}
 
-    public void OnRedButtonClicked()
+    public void OnButtonClicked()
     {
-        Debug.Log("Red Button has been clicked.");
+        TestString.Value = "Clicked!";
     }
 }

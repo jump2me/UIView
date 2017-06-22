@@ -3,26 +3,27 @@
 
 	<Panel Name="TestPanel" Anchor="Stretch" Margin="200,200,50,50">
 
-		<Button Name="First" Anchor="TopCenter" OffsetY="100">
-		    <Text Style="ButtonLabel" Label="true" Anchor="Stretch" Margin="20,120,0,2" />
-		    <Text Style="ButtonLabel" Label="true" Anchor="Stretch" Margin="120,20,0,2"/>
-		</Button>
-
-		<Button Style="Red" Name="Second" Anchor="TopCenter" OffsetY="180" OnClick="OnRedButtonClicked" />
-
-		<Button Style="Blue" Name="Third" Anchor="TopCenter" OffsetY="260" />
-
-		<Button Style="Close" Name="CloseButton" Anchor="TopRight" OffsetX="50" OffsetY="50" />
+		<!--<Button Name="First" Anchor="TopCenter" OffsetY="100">
+      <Text Style="Default_ButtonLabel" Label="true" Anchor="Stretch" Margin="20,120,0,2" />
+		  <Text Style="Default_ButtonLabel" Label="true" Anchor="Stretch" Margin="120,20,0,2" />
+		</Button>-->
+    
+		<Button Text="{TestString}" Anchor="TopCenter" OffsetY="180" OnClick="OnButtonClicked" />
+    <Button Style="Close" Name="CloseButton" Anchor="TopRight" OffsetX="50" OffsetY="50" />
 
 		<Text Style="Default" Name="Text" Width="400" Height="60" OffsetY="-100" Text="{TestString}" IgnoreInput="True" />
 
-		<Toggle Style="Default" Anchor="BottomCenter" OffsetY="50" >
+		<!--<Toggle Style="Default" Anchor="BottomCenter" OffsetY="50" >
 		    <Image Style="ToggleBG" >
 		        <Image Style ="ToggleOn" />
 		    </Image>
 			<Text Style="Default" Name="Toggle" Anchor="Stretch" Margin="40,0,0,0" Alignment="MiddleLeft" />
-		</Toggle>
+		</Toggle>-->
 		
     </Panel>
+
+  <!--<Button OnClick="OnRedButtonClicked" Text="{TestString}" OffsetY="-40" />
+
+  <Button Style="Red" OnClick="OnRedButtonClicked" Text="{TestString}" OffsetY="40" />-->
 	
 </TestView>

@@ -51,20 +51,20 @@ public class Text : UIView
             property = (Property<string>)ReflectionUtility.FindProperty(this, propertyName);
         }
 
-        this.InitializeTextComponent(font,
-									FontStyle.Normal,
-									fontSize,
-									spacing,
-									true,
-									alignment,
-									autoWrap ? HorizontalWrapMode.Wrap : HorizontalWrapMode.Overflow,
-									VerticalWrapMode.Truncate,
-									bestFit,
-									minSize,
-									maxSize,
-                                    UpColor,
-									text,
-		                            property);
+        InitializeTextComponent(font,
+								FontStyle.Normal,
+								fontSize,
+								spacing,
+								true,
+								alignment,
+								autoWrap ? HorizontalWrapMode.Wrap : HorizontalWrapMode.Overflow,
+								VerticalWrapMode.Truncate,
+								bestFit,
+								minSize,
+								maxSize,
+                                UpColor,
+								text,
+		                        property);
 
         bool isLabel = _xmlNode.GetBoolValue("Label");
         if(isLabel)
@@ -95,7 +95,6 @@ public class Text : UIView
 		Text.color = _color;
 
         Text.raycastTarget = false;
-        //Text.raycastTarget = true;
 
         BoundProperty = _boundProperty;
         if(BoundProperty != null)

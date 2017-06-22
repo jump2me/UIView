@@ -17,6 +17,7 @@ public partial class UIView
     public Type Type { get; internal set; }
     public bool IsRoot { get; internal set; }
     public UIView ClassRoot { get; internal set; }
+    public string StyleId { get; set; }
 
 	public Canvas Canvas { get; internal set; }
 	public CanvasScaler CanvasScaler { get; internal set; }
@@ -58,8 +59,9 @@ public partial class UIView
         };
 
         RectTransform = GameObject.AddComponent<RectTransform>();
-
+#if UNITY_EDITOR
         XMLUI.UIViews.Add(this);
+#endif
     }
 
     public void InitializeCanvasRender(bool _root)

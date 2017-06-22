@@ -7,7 +7,7 @@ using System.Collections.Generic;
 
 public static class XMLayoutBuilder 
 {
-    public static void Build(UIView _view, bool _root = true)
+    public static void Build(UIView _view, bool _root = true, UIView _classRoot = null, XmlNode _styleXml = null)
 	{
 		string path = string.Format("UI/XML/Views/{0}", _view.Name);
 
@@ -19,11 +19,11 @@ public static class XMLayoutBuilder
 		}
 		else if (XMLUtility.TryLoadXml(textAsset, out layoutXmlDocument))
 		{
-            ReadLayoutXmlDocument(layoutXmlDocument, _view, _root);
+            ReadLayoutXmlDocument(layoutXmlDocument, _view, _root, _classRoot, _styleXml);
 		}
 	}
 
-	public static void ReadLayoutXmlDocument(XmlDocument _layoutXml, UIView _rootUIView, bool _root)
+	public static void ReadLayoutXmlDocument(XmlDocument _layoutXml, UIView _rootUIView, bool _root, UIView _classRoot, XmlNode _styleXml)
 	{
 		XmlElement layoutXmlRoot = _layoutXml.DocumentElement;
         List<XmlNode> layoutXmlNodes = layoutXmlRoot.GetAllChildrenXMLNodesRecursively();
@@ -31,10 +31,10 @@ public static class XMLayoutBuilder
         Dictionary <XmlNode, UIView> viewByNodes = new Dictionary<XmlNode, UIView>();
 		viewByNodes.Add(layoutXmlRoot, _rootUIView);
 
-		_rootUIView.ClassRoot = _rootUIView;
+		_rootUIView.ClassRoot = _classRoot ?? _rootUIView;
 
         if (_root)
-	        ApplyLayoutXmlNode(layoutXmlRoot, _rootUIView);
+	        ApplyLayoutXmlNode(layoutXmlRoot, _rootUIView, _styleXml);
 
 		foreach (XmlNode childLayoutXmlNode in layoutXmlNodes)
 		{
@@ -43,7 +43,7 @@ public static class XMLayoutBuilder
                  
 			XmlNode parentNode = childLayoutXmlNode.ParentNode;
 			UIView childUIView = XMLUI.CreateView(childLayoutXmlNode.Name);
-			childUIView.ClassRoot = _rootUIView;       
+			childUIView.ClassRoot = _classRoot ?? _rootUIView;
 
 			if (parentNode == layoutXmlRoot)
 			{
@@ -56,11 +56,11 @@ public static class XMLayoutBuilder
 
             viewByNodes.Add(childLayoutXmlNode, childUIView);
 
-            ApplyLayoutXmlNode(childLayoutXmlNode, childUIView);
+            ApplyLayoutXmlNode(childLayoutXmlNode, childUIView, _styleXml);
         }
 	}
 
-	public static void ApplyLayoutXmlNode(XmlNode _xmlNode, UIView _view)
+	public static void ApplyLayoutXmlNode(XmlNode _xmlNode, UIView _view, XmlNode _styleXml)
 	{
         // GameObject Name
         string name = _xmlNode.GetStringValue("Name");
@@ -77,13 +77,14 @@ public static class XMLayoutBuilder
 
 		// Find Style Data
 		string styleId = "Default";
-		if (_xmlNode.Attributes["Style"] != null)
+        if (_xmlNode.Attributes["Style"] != null)
 			styleId = _xmlNode.Attributes["Style"].Value;
 
-		XmlNode styleXml = XMLUI.StyleList.Find(e => e.Name == _view.Name && e.Attributes["Style"].Value == styleId);
+        XmlNode styleXml = _styleXml ?? XMLUI.GetStyleXml(_view.Name, styleId);
+        _view.StyleId = styleId;
 
-		// width and height
-		float width = _xmlNode.GetFloatValue("Width", styleXml);
+        // width and height
+        float width = _xmlNode.GetFloatValue("Width", styleXml);
 		float height = _xmlNode.GetFloatValue("Height", styleXml);
 
 		_view.RectTransform.sizeDelta = new Vector2(width, height);

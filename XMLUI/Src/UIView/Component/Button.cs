@@ -35,6 +35,24 @@ public class Button : UIView
         {
             DownSprite = Image.sprite;
         }
+
+        string param = _xmlNode.GetStringValue("Text", _styleXml);
+        if(string.IsNullOrEmpty(param) == false)
+        {
+            var styleId = "Default";
+            var style = _xmlNode.GetStringValue("Style");
+            if(string.IsNullOrEmpty(style) == false)
+            {
+                styleId = style;
+            }
+
+            var styleXml = XMLUI.GetStyleXml("Text", styleId + "_ButtonLabel");
+            styleXml.Attributes["Text"].Value = param;
+
+            var view = XMLUI.CreateView<Text>(ClassRoot, styleXml);
+            view.Parent = this;
+            Labels.Add(view);
+        }
     }
 
     public override void OnPointerClicked(BaseEventData e)

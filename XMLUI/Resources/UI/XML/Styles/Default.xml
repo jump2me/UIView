@@ -12,8 +12,6 @@
   
   <!--Buttons-->
   <Button Style="Default" Image="UI/Images/btn_blue" Down="UI/Images/btn_gray" Type="Sliced" Width="240" Height="62" />
-
-  <Button Style="Blue" Image="UI/Images/btn_blue" Down="UI/Images/btn_gray" Type="Sliced" Width="240" Height="62" />
   
   <Button Style="Red" Image="UI/Images/btn_red" Down="UI/Images/btn_gray" Type="Sliced" Width="240" Height="62" />
   
@@ -33,7 +31,7 @@
         MaxSize="24"
         Text="text" />
   
-  <Text Style="ButtonLabel"
+  <Text Style="Default_ButtonLabel"
         Font="NanumBarunGothicBold"
         Size="24"
         Spacing="0.7"
@@ -47,6 +45,21 @@
         Text="Button"
         Anchor="Stretch" 
         Margin="30,30,0,2" />
+
+  <Text Style="Red_ButtonLabel"
+      Font="NanumBarunGothicBold"
+      Size="24"
+      Spacing="0.7"
+      Color="0xfff5da"
+      Down="0xcccccc"
+      Alignment="MiddleCenter"
+      AutoWrap="true"
+      BestFit="true"
+      MinSize="10"
+      MaxSize="24"
+      Text="Button"
+      Anchor="Stretch"
+      Margin="30,30,0,2" />
 
 	<Toggle Style="Default" Name="Toggle" Width="240" Height="62" />
 

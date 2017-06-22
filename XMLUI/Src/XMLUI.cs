@@ -59,10 +59,10 @@ public static class XMLUI
         InitializeStyle();
     }
 
-    public static TYPE CreateView<TYPE>() where TYPE : UIView
+    public static TYPE CreateView<TYPE>(UIView _classRoot = null, XmlNode _styleXml = null) where TYPE : UIView
     {
         TYPE view = Activator.CreateInstance<TYPE>();
-        XMLayoutBuilder.Build(view);
+        XMLayoutBuilder.Build(view, true, _classRoot, _styleXml);
 
         return view;
     }
@@ -146,6 +146,11 @@ public static class XMLUI
             Debug.LogWarning(string.Format("cannot find font {0}. using fallback font instead.", _fontName));
             return FontsByName["Arial"];
         }
+    }
+
+    public static XmlNode GetStyleXml(string _viewName, string _styleID)
+    {
+        return StyleList.Find(e => e.Name == _viewName && e.Attributes["Style"].Value == _styleID);
     }
 
 #if UNITY_EDITOR
